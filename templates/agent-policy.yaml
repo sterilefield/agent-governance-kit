@@ -1,0 +1,29 @@
+# One file per agent. Checked by: python3 kit/govcheck.py policy <file>
+agent: reminder-assistant          # a role name, not a person
+owner: clinic-owner                # the human accountable for this agent
+level: L2                          # L0 Observer · L1 Proposer · L2 Operator · L3 Delegate (L4 is refused)
+remit: "Send appointment reminders to opted-in patients"
+risk:
+  act: [R0, R1, R2]                # classes it may perform and log
+  propose: [R3, R4]                # classes it may only prepare for a human
+ceilings:                          # never above L3, whatever the level
+  - clinical
+  - money
+  - external_send
+  - deletion
+  - secrets
+tools:                             # deny by default: list only what is needed
+  - calendar.read
+  - outbox.write
+budgets:
+  tokens_per_day: 200000
+  runs_per_day: 48
+hitl:
+  soft_stop_window_seconds: 180
+promotion:
+  since: 2026-01-01
+  actions_at_level: 0
+  critical_incidents: 0
+audit:
+  sink: audit/audit-log.jsonl
+  retention_days: 365

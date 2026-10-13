@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Agent governance kit: autonomy levels, risk classes and approval tiers for AI agents"
+type: software
+authors:
+  - family-names: "Thiriveedhi"
+    given-names: "Ravi Teja"
+repository-code: "https://github.com/sterilefield/agent-governance-kit"
+version: "0.1.0"
+license: Apache-2.0

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent audit event",
+  "description": "One line of the append-only audit log. Governance fields are required; OpenTelemetry GenAI fields are used where they apply.",
+  "type": "object",
+  "required": ["ts", "event_id", "actor", "level", "risk_class", "tier", "action", "outcome"],
+  "properties": {
+    "ts": {"type": "string", "format": "date-time"},
+    "event_id": {"type": "string"},
+    "actor": {"type": "string", "description": "Agent or human role name"},
+    "level": {"enum": ["L0", "L1", "L2", "L3", "human"]},
+    "risk_class": {"enum": ["R0", "R1", "R2", "R3", "R4"]},
+    "tier": {"enum": ["silent", "soft_stop", "hard_stop"]},
+    "action": {"type": "string"},
+    "approver": {"type": ["string", "null"]},
+    "approval_card": {"type": ["string", "null"]},
+    "outcome": {"enum": ["proposed", "approved", "rejected", "done", "failed", "rolled_back", "stopped"]},
+    "gen_ai.operation.name": {"type": "string"},
+    "gen_ai.request.model": {"type": "string"},
+    "gen_ai.usage.input_tokens": {"type": "integer"},
+    "gen_ai.usage.output_tokens": {"type": "integer"},
+    "gen_ai.agent.name": {"type": "string"},
+    "gen_ai.tool.name": {"type": "string"}
+  }
+}

@@ -1,0 +1,4 @@
+{"ts":"2026-01-05T09:00:00+05:30","event_id":"e1","actor":"reminder-assistant","level":"L2","risk_class":"R0","tier":"silent","action":"calendar.read tomorrow","outcome":"done","gen_ai.operation.name":"chat","gen_ai.agent.name":"reminder-assistant"}
+{"ts":"2026-01-05T09:01:00+05:30","event_id":"e2","actor":"reminder-assistant","level":"L2","risk_class":"R1","tier":"silent","action":"outbox.write 12 reminder drafts","outcome":"done","gen_ai.usage.input_tokens":1800,"gen_ai.usage.output_tokens":600}
+{"ts":"2026-01-05T09:02:00+05:30","event_id":"e3","actor":"reminder-assistant","level":"L2","risk_class":"R4","tier":"hard_stop","action":"send 12 approved reminder templates","approval_card":"AC-20260105-01","outcome":"proposed"}
+{"ts":"2026-01-05T09:20:00+05:30","event_id":"e4","actor":"clinic-owner","level":"human","risk_class":"R4","tier":"hard_stop","action":"approve AC-20260105-01","approver":"clinic-owner","approval_card":"AC-20260105-01","outcome":"approved"}
