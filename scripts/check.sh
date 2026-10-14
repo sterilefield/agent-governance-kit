@@ -30,12 +30,9 @@ command -v lychee >/dev/null && lychee --no-progress ${LYCHEE_OFFLINE:+--offline
 
 step "4/4 project tests"
 if [ -f package.json ]; then npm ci && npm test; fi
-if [ -f pyproject.toml ] || [ -f requirements.txt ]; then
-  if [ -f requirements.txt ]; then
-    python3 -m pip install -q -r requirements.txt 2>/dev/null || python3 -m pip install -q --break-system-packages -r requirements.txt
-  else
-    python3 -m pip install -q -e .
-  fi
+if [ -f requirements.txt ]; then
+  # Hash-pinned dependencies only (OpenSSF Scorecard: Pinned-Dependencies)
+  python3 -m pip install -q --require-hashes -r requirements.txt 2>/dev/null || python3 -m pip install -q --break-system-packages --require-hashes -r requirements.txt
   python3 -m pytest -q
 fi
 echo "✅ all checks passed"
