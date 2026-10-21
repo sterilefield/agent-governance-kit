@@ -129,4 +129,4 @@ gh attestation verify verify-latest/agent-governance-kit-*.tar.gz -R sterilefiel
 
 ## Licence
 
-[Apache-2.0](LICENSE). Use, adapt and ship it, with attribution. This kit is engineering guidance, not legal advice; check regulations with a qualified adviser before relying on them. The [NOTICE](NOTICE) file carries the healthcare and safety notice that travels with any copy.
+[Apache-2.0](LICENSE). Use, adapt and ship it, with attribution. This kit is engineering guidance, not legal advice; check regulations with a qualified adviser before relying on them. [NOTICE](NOTICE) holds the attribution notice Apache-2.0 asks redistributors to keep, plus a healthcare and safety notice.

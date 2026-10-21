@@ -19,3 +19,7 @@ especially) are all welcome.
 
 Run `bash scripts/check.sh` before opening a pull request. CI runs the same script:
 a full-history secret scan, a link check and any project tests.
+
+## Licensing of contributions
+
+Code contributions are accepted under Apache-2.0 (inbound = outbound).

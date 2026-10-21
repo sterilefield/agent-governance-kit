@@ -1,7 +1,8 @@
 agent-governance-kit
-Copyright 2026 Dr. Ravi Teja Thiriveedhi
+Copyright 2026 Ravi Teja Thiriveedhi
 
-Licensed under the Apache License 2.0: see LICENSE. Keep this NOTICE with any redistribution.
+Licensed under the Apache License 2.0 (LICENSE). This NOTICE holds the attribution
+notice that Apache-2.0 section 4(d) asks redistributors to keep.
 
 Healthcare and safety notice
 ----------------------------
@@ -10,7 +11,11 @@ medical, dental, legal or regulatory advice, and nothing in it is for clinical u
 Demos and examples use invented data only. Anyone who adapts this material is responsible
 for validating it, for obtaining any clinical, legal and regulatory sign-off their setting
 requires, and for protecting patient and personal data. Regulatory references describe
-systems as "designed toward" a regulation, never as certified or compliant.
+systems as "designed toward" a regulation, never as certified or compliant. Please keep this
+notice with copies; it is a request, separate from the licence terms.
 
-The author's name, the "Sterile Field" name and logo, and the client case material are not
-licensed for use as trademarks or endorsements. See TRUST.md for scope and limitations.
+Names and endorsement
+---------------------
+Beyond the attribution these licences require, neither licence grants use of the author's
+name, the "Sterile Field" name or any client's identity. Nothing here may be used to state or
+imply endorsement by the author or by any client.
