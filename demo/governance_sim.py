@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2026 Ravi Teja Thiriveedhi
 """governance_sim: a runnable walk-through of the agent governance kit on invented agents and actions.
 
     python3 demo/governance_sim.py              # run the scenario, print the decisions
