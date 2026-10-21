@@ -13,6 +13,11 @@ Sanitised public showcase by Dr. Ravi Teja Thiriveedhi (clinician turned AI syst
 - [docs/healthcare-overlay.md](https://github.com/sterilefield/agent-governance-kit/blob/main/docs/healthcare-overlay.md): Clinic and hospital rules for India
 - [kit/govcheck.py](https://github.com/sterilefield/agent-governance-kit/blob/main/kit/govcheck.py): Policy and audit checker
 
+## Demo
+
+- [Agent governance gate](https://sterilefield.github.io/agent-governance-kit/): live demo on invented data
+- [demo/governance_sim.py](https://github.com/sterilefield/agent-governance-kit/blob/main/demo/governance_sim.py): runnable teaching model, standard library only
+
 ## Optional
 
 - [All showcases](https://github.com/sterilefield): the Sterile Field organisation
