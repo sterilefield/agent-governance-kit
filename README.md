@@ -6,6 +6,11 @@ This kit is the public, generic form of the governance framework the author desi
 
 The rules in the table below come from that framework. The guidance around them, the templates and the checker are written to be generic, so you can adopt them in your own system.
 
+> [!IMPORTANT]
+> **Status:** Framework kit with a working policy checker (Python) and tests. Last verified 21 Oct 2026. Not for clinical use as-is. Scope and limits: [TRUST.md](TRUST.md).
+
+**[Autonomy levels](docs/autonomy-levels.md) · [Risk classes](docs/risk-classes.md) · [Standards mapping](docs/standards-mapping.md) · [Healthcare overlay](docs/healthcare-overlay.md) · [Trust](TRUST.md) · [All showcases](https://github.com/sterilefield) · [Contact](https://www.linkedin.com/in/dr-ravi-teja-thiriveedhi)**
+
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/sterilefield/agent-governance-kit/badge)](https://scorecard.dev/viewer/?uri=github.com/sterilefield/agent-governance-kit)
 
 ## The framework on one page
@@ -68,6 +73,19 @@ Run the tests with `pip install -r requirements.txt && python3 -m pytest -q`, or
 
 - [empire-os-reference-architecture](https://github.com/sterilefield/empire-os-reference-architecture): the platform this framework governs.
 - [llm-token-economics](https://github.com/sterilefield/llm-token-economics): budgets and caps, the cost side of governance.
+
+## How this was built
+
+I write the specifications, architecture, acceptance criteria and review gates; AI coding agents (Claude Code and Codex) write most of the code under those specifications. I own every review, test gate, release decision and production operation. Text in this repository was drafted with AI assistance and passed gate G4, a review by a fresh-context AI agent that did not write it, before my own approval (G5).
+
+## Verify this release
+
+Every release carries a build-provenance attestation for its source archive and an SPDX SBOM.
+
+```bash
+gh release download v0.1.0 -R sterilefield/agent-governance-kit -p 'agent-governance-kit-v0.1.0.tar.gz'
+gh attestation verify agent-governance-kit-v0.1.0.tar.gz -R sterilefield/agent-governance-kit
+```
 
 ## Author
 
