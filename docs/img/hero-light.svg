@@ -16,6 +16,7 @@
 <text x="982.0" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="38" font-weight="800" fill="#1a7f37">R0–R4</text>
 <text x="982.0" y="190" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">risk classes</text>
 <rect x="1080" y="96" width="172" height="128" rx="10" fill="#f6f8fa" stroke="#d1d9e0"/>
-<text x="1166.0" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="38" font-weight="800" fill="#1a7f37">3</text>
-<text x="1166.0" y="190" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">standards mapped</text>
+<text x="1166.0" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="38" font-weight="800" fill="#1a7f37">L3</text>
+<text x="1166.0" y="190" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">highest level for</text>
+<text x="1166.0" y="208" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#59636e">health, money</text>
 </svg>

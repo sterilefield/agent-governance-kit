@@ -1,6 +1,6 @@
 <p align="center"><a href="https://sterilefield.github.io/agent-governance-kit/"><picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/img/hero-dark.svg">
-  <img alt="Banner: Agent governance kit, with key figures from this README" src="docs/img/hero-light.svg" width="100%">
+  <img alt="Agent governance kit: autonomy levels L0–L4, risk classes R0–R4, and L3 as the highest level for health, money and external sends" src="docs/img/hero-light.svg" width="100%">
 </picture></a></p>
 
 # Agent governance kit
@@ -20,7 +20,7 @@ The rules in the table below come from that framework. The guidance around them,
 
 ### See it in action
 
-<a href="https://sterilefield.github.io/agent-governance-kit/"><img alt="Animated recording of the Agent governance gate live demo: real interactions on invented data" src="docs/img/demo.gif" width="100%"></a>
+<a href="https://sterilefield.github.io/agent-governance-kit/"><img alt="Animated recording of the Agent governance gate live demo: scripted interactions on invented data" src="docs/img/demo.gif" width="100%"></a>
 
 <sub>Recorded from the live demo page with scripted clicks, on invented data. [Open the demo](https://sterilefield.github.io/agent-governance-kit/) to try it yourself.</sub>
 
@@ -115,11 +115,12 @@ I write the specifications, architecture, acceptance criteria and review gates; 
 
 ## Verify this release
 
-Every release carries a build-provenance attestation for its source archive and an SPDX SBOM (the SBOM is attested too from v0.2.0). These commands fetch the latest release:
+Every release carries a build-provenance attestation for its source archive and an SPDX SBOM (the SBOM is attested too from v0.2.0). These commands fetch the latest release into a new folder and check both attestations:
 
 ```bash
-gh release download -R sterilefield/agent-governance-kit -p '*.tar.gz' -p 'sbom.spdx.json'
-gh attestation verify agent-governance-kit-*.tar.gz -R sterilefield/agent-governance-kit
+gh release download -R sterilefield/agent-governance-kit -p '*.tar.gz' -p 'sbom.spdx.json' -D verify-latest
+gh attestation verify verify-latest/agent-governance-kit-*.tar.gz -R sterilefield/agent-governance-kit
+gh attestation verify verify-latest/agent-governance-kit-*.tar.gz -R sterilefield/agent-governance-kit --predicate-type https://spdx.dev/Document/v2.3
 ```
 
 ## Author
