@@ -7,7 +7,7 @@
 Framework documentation, templates and a small python checker. Teams that let AI agents touch real work and need autonomy levels, risk classes, approval tiers, kill switches and an audit spine they can adopt.
 
 ## Out of scope
-It is not a certified compliance product and not legal advice. The healthcare overlay is engineering guidance, not clinical or regulatory sign-off.
+It is not a certified compliance product and not legal advice. The healthcare overlay is engineering guidance, not clinical or regulatory sign-off. `demo/` and `site/` are teaching demos on invented agents and actions.
 
 ## Limitations
 - The standards mapping reflects the author's reading of OWASP, NIST AI RMF, ISO/IEC 42001 and India's DPDP Rules; verify with a qualified adviser.

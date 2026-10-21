@@ -11,7 +11,7 @@ The rules in the table below come from that framework. The guidance around them,
 
 **[Autonomy levels](docs/autonomy-levels.md) · [Risk classes](docs/risk-classes.md) · [Standards mapping](docs/standards-mapping.md) · [Healthcare overlay](docs/healthcare-overlay.md) · [Trust](TRUST.md) · [All showcases](https://github.com/sterilefield) · [Contact](https://www.linkedin.com/in/dr-ravi-teja-thiriveedhi)**
 
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/sterilefield/agent-governance-kit/badge)](https://scorecard.dev/viewer/?uri=github.com/sterilefield/agent-governance-kit)
+[![CI](https://github.com/sterilefield/agent-governance-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/sterilefield/agent-governance-kit/actions/workflows/ci.yml) [![Live demo](https://img.shields.io/badge/live_demo-open-1a7f37)](https://sterilefield.github.io/agent-governance-kit/) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/sterilefield/agent-governance-kit) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/sterilefield/agent-governance-kit/badge)](https://scorecard.dev/viewer/?uri=github.com/sterilefield/agent-governance-kit)
 
 ## The framework on one page
 
@@ -73,6 +73,30 @@ Run the tests with `pip install -r requirements.txt && python3 -m pytest -q`, or
 
 - [empire-os-reference-architecture](https://github.com/sterilefield/empire-os-reference-architecture): the platform this framework governs.
 - [llm-token-economics](https://github.com/sterilefield/llm-token-economics): budgets and caps, the cost side of governance.
+
+## Try it
+
+**[Agent governance gate](https://sterilefield.github.io/agent-governance-kit/)**: pick an autonomy level and an action, see the gate's decision and the audit event; replay a 15-step scenario whose audit log passes `kit/govcheck.py`. It runs in your browser on invented data.
+
+<a href="https://sterilefield.github.io/agent-governance-kit/"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/demo-page-dark.png">
+  <img alt="Screenshot of the Agent governance gate demo page, showing invented data" src="docs/img/demo-page-light.png" width="100%">
+</picture></a>
+
+Or run the same logic yourself (Python 3, standard library only, nothing to install):
+
+```bash
+git clone https://github.com/sterilefield/agent-governance-kit.git
+cd agent-governance-kit
+python3 demo/governance_sim.py
+```
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/demo-terminal-dark.svg">
+  <img alt="Terminal recording of python3 demo/governance_sim.py: the real output of the demo" src="docs/img/demo-terminal-light.svg" width="100%">
+</picture>
+
+The terminal image is the real output of that command, rendered by `scripts/term_svg.py`. Everything in `demo/` and `site/` is a demo written for this repository on invented data. It is not production code, and the tests in `tests/` run on every pull request.
 
 ## How this was built
 

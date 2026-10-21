@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Governance Gate</title>
+<meta name="description" content="Interactive demo of the agent governance kit: autonomy levels, risk classes, approval tiers, kill switch and audit events. Synthetic data only.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<header>
+  <h1>Agent governance gate</h1>
+  <p>Pick an agent's autonomy level and an action. The gate applies the kit's published rules and shows the decision and the audit event it would log.</p>
+  <div class="chips"><span class="chip warn">Synthetic data · not real</span><span class="chip">Runs in your browser · nothing is sent</span><a class="chip" href="https://github.com/sterilefield/agent-governance-kit">Source and docs</a></div>
+</header>
+
+<div class="grid">
+  <section class="card">
+    <h2>1 · Ask the gate</h2>
+    <label for="level">Agent autonomy level</label>
+    <select id="level">
+      <option value="L0">L0 Observer: read and report</option>
+      <option value="L1">L1 Proposer: propose, a human acts</option>
+      <option value="L2" selected>L2 Operator: routine, reversible work</option>
+      <option value="L3">L3 Delegate: delegated work within its remit</option>
+      <option value="L4">L4 Autonomous (never granted)</option>
+    </select>
+    <label for="action">Action</label>
+    <select id="action"></select>
+    <div class="toggle"><input type="checkbox" id="kill"><label for="kill" style="margin:0">Kill switch on (stop all agents)</label></div>
+    <div id="verdict" class="verdict" aria-live="polite"></div>
+  </section>
+
+  <section class="card">
+    <h2>2 · The audit event it logs</h2>
+    <p class="dim" style="margin:0">One append-only JSON line per action, with OpenTelemetry GenAI fields. <code>kit/govcheck.py audit</code> checks these lines.</p>
+    <pre id="event" class="mono" aria-live="polite"></pre>
+  </section>
+
+  <section class="card wide">
+    <h2>3 · Levels × risk classes</h2>
+    <div class="scroll"><table id="matrix"></table></div>
+    <p class="dim" style="font-size:13px">✔ act and log · propose = prepare for a human · wait = hard stop until a named human approves · — = not allowed</p>
+  </section>
+
+  <section class="card wide">
+    <h2>4 · Replay the scenario</h2>
+    <p class="dim" style="margin:0">The same 15 steps as <code>python3 demo/governance_sim.py</code>: invented agents, an owner who approves some actions and rejects others, and the kill switch.</p>
+    <p><button class="primary" id="play">Replay</button></p>
+    <div class="scroll"><table id="log"><thead><tr><th>Agent</th><th>Level</th><th>Class</th><th>Decision</th><th>Action → result</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</div>
+<footer>A teaching demo written for this repository. It is not production code, not legal or regulatory advice, and not for clinical use. <a href="https://github.com/sterilefield/agent-governance-kit/blob/main/TRUST.md">Scope and limits</a>.</footer>
+</main>
+<script>
+const CLASSES=["R0","R1","R2","R3","R4"];
+const ACTIONS={read:["R0","Read a log or notes"],search:["R0","Search the web or notes"],draft:["R1","Write a draft to its own outbox"],restart_service:["R2","Restart a service"],move_to_holding:["R2","Move a file to a holding folder"],change_schedule:["R3","Change a schedule"],change_model_route:["R3","Change a model route"],send_external:["R4","Send a message outside the organisation"],refund:["R4","Issue a refund"],delete_records:["R4","Delete records"],rotate_key:["R4","Rotate a key"],clinical_reply:["R4","Reply with health or clinical content"],unlisted_tool:["R4","An action nobody has classified yet"]};
+function classify(a){return ACTIONS[a]&&a!=="unlisted_tool"?ACTIONS[a][0]:"R4"}
+function decide(level,rc,killed){
+  if(killed)return["STOPPED","hard_stop","Kill switch is on; nothing runs until the owner restores."];
+  if(level==="L4")return["BLOCK","hard_stop","L4 Autonomous is never granted."];
+  if(level==="L0")return rc==="R0"?["ACT","silent","L0 may read and report."]:["BLOCK","hard_stop","L0 Observer may only read."];
+  if(rc==="R0")return["ACT","silent","Reads are always allowed and logged."];
+  if(level==="L1")return["PROPOSE","hard_stop","L1 prepares the action; a human decides."];
+  if(rc==="R1"||rc==="R2")return["ACT","silent",level+" may act on "+rc+" and log it."];
+  if(level==="L2")return["PROPOSE","hard_stop","L2 may only propose "+rc+"."];
+  return["WAIT","hard_stop","Hard stop: needs "+(rc==="R3"?"orchestrator review plus the owner.":"the owner, every time.")];
+}
+const CLS={ACT:"v-ok",PROPOSE:"v-warn",WAIT:"v-warn",BLOCK:"v-bad",STOPPED:"v-bad"};
+const LABEL={ACT:"✔ Act and log",PROPOSE:"⏸ Propose for a human",WAIT:"⏸ Wait: hard stop",BLOCK:"✖ Blocked",STOPPED:"✖ Stopped by the kill switch"};
+const $=id=>document.getElementById(id);
+for(const [k,[rc,txt]] of Object.entries(ACTIONS)){const o=document.createElement("option");o.value=k;o.textContent=rc+" · "+txt;$("action").appendChild(o)}
+$("action").value="send_external";
+function matrix(level,rc){
+  const rows=["L0","L1","L2","L3","L4"];let h="<thead><tr><th>Level</th>"+CLASSES.map(c=>"<th>"+c+"</th>").join("")+"</tr></thead><tbody>";
+  for(const l of rows){h+="<tr><th>"+l+"</th>";for(const c of CLASSES){const v=decide(l,c,false)[0];const t={ACT:"✔",PROPOSE:"propose",WAIT:"wait",BLOCK:"—"}[v]||v;h+="<td class='"+(l===level&&c===rc?"hl ":"")+({ACT:"ok",BLOCK:"dim"}[v]||"warn")+"'>"+t+"</td>"}h+="</tr>"}
+  $("matrix").innerHTML=h+"</tbody>";
+}
+let n=0;
+function update(){
+  const level=$("level").value,a=$("action").value,rc=classify(a),killed=$("kill").checked;
+  const [v,tier,why]=decide(level,rc,killed);
+  $("verdict").className="verdict "+CLS[v];
+  $("verdict").innerHTML=LABEL[v]+"<small>"+rc+" · tier: "+tier.replace("_"," ")+" · "+why+"</small>";
+  const ev={ts:new Date().toISOString(),event_id:"demo-"+String(++n).padStart(3,"0"),actor:"demo-agent",level:level,risk_class:rc,tier:tier,action:a,outcome:{ACT:"done",PROPOSE:"proposed",WAIT:"proposed",BLOCK:"stopped",STOPPED:"stopped"}[v],"gen_ai.agent.name":"demo-agent"};
+  if(v==="PROPOSE"||v==="WAIT")ev.approval_card="AC-DEMO-"+String(n).padStart(2,"0");
+  $("event").textContent=JSON.stringify(ev,null,2);
+  matrix(level,rc);
+}
+["level","action","kill"].forEach(id=>$(id).addEventListener("change",update));update();
+const SCENARIO=[["intake-assistant","L2","read","today's new enquiries",null],["intake-assistant","L2","draft","3 reply drafts to the outbox",null],["intake-assistant","L2","send_external","3 replies to customers",null],["ops-agent","L3","restart_service","report generator",null],["ops-agent","L3","change_schedule","nightly backup from 02:00 to 03:00","approve"],["ops-agent","L3","send_external","weekly summary to a supplier","approve"],["research-scout","L0","search","public guidance on appointment reminders",null],["research-scout","L0","draft","summary note",null],["billing-helper","L1","refund","invoice INV-0042","reject"],["ops-agent","L3","delete_records","old temp exports","reject"],["intake-assistant","L2","unlisted_tool","(not on the list, so treated as R4)",null],["KILL"],["ops-agent","L3","read","service status",null],["RESTORE"],["ops-agent","L3","read","service status",null]];
+$("play").addEventListener("click",async()=>{
+  const tb=$("log").querySelector("tbody");tb.innerHTML="";let killed=false,cards=0;
+  for(const s of SCENARIO){
+    const tr=document.createElement("tr");
+    if(s[0]==="KILL"||s[0]==="RESTORE"){killed=s[0]==="KILL";tr.innerHTML="<td>owner</td><td>-</td><td>-</td><td class='bad'>⚑ "+s[0]+"</td><td>kill switch "+(killed?"ON: every agent stops":"OFF: owner restores")+"</td>"}
+    else{const [ag,l,a,d,owner]=s,rc=classify(a),[v]=decide(l,rc,killed);let r="done";
+      if(v==="BLOCK"||v==="STOPPED")r="stopped";else if(v!=="ACT"){cards++;const c="AC-20260105-"+String(cards).padStart(2,"0");r=owner==="approve"?(rc==="R3"?"reviewed by orchestrator, ":"")+"approved by owner ("+c+")":owner==="reject"?"rejected by owner ("+c+")":"waiting on "+c}
+      tr.innerHTML="<td>"+ag+"</td><td>"+l+"</td><td>"+rc+"</td><td class='"+({ACT:"ok",BLOCK:"bad",STOPPED:"bad"}[v]||"warn")+"'>"+v+"</td><td>"+a+" "+d+" → "+r+"</td>"}
+    tb.appendChild(tr);await new Promise(r=>setTimeout(r,matchMedia("(prefers-reduced-motion: reduce)").matches?0:250));
+  }
+});
+</script>
+</body>
+</html>
