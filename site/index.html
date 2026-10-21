@@ -35,7 +35,7 @@
   <section class="card">
     <h2>2 · The audit event it logs</h2>
     <p class="dim" style="margin:0">One append-only JSON line per action, with OpenTelemetry GenAI fields. <code>kit/govcheck.py audit</code> checks these lines.</p>
-    <pre id="event" class="mono"></pre>
+    <pre id="event" class="mono" aria-live="polite"></pre>
   </section>
 
   <section class="card wide">
@@ -96,7 +96,7 @@ $("play").addEventListener("click",async()=>{
     const tr=document.createElement("tr");
     if(s[0]==="KILL"||s[0]==="RESTORE"){killed=s[0]==="KILL";tr.innerHTML="<td>owner</td><td>-</td><td>-</td><td class='bad'>⚑ "+s[0]+"</td><td>kill switch "+(killed?"ON: every agent stops":"OFF: owner restores")+"</td>"}
     else{const [ag,l,a,d,owner]=s,rc=classify(a),[v]=decide(l,rc,killed);let r="done";
-      if(v==="BLOCK"||v==="STOPPED")r="stopped";else if(v!=="ACT"){cards++;const c="AC-20260105-"+String(cards).padStart(2,"0");r=owner==="approve"?"approved by owner ("+c+")":owner==="reject"?"rejected by owner ("+c+")":"waiting on "+c}
+      if(v==="BLOCK"||v==="STOPPED")r="stopped";else if(v!=="ACT"){cards++;const c="AC-20260105-"+String(cards).padStart(2,"0");r=owner==="approve"?(rc==="R3"?"reviewed by orchestrator, ":"")+"approved by owner ("+c+")":owner==="reject"?"rejected by owner ("+c+")":"waiting on "+c}
       tr.innerHTML="<td>"+ag+"</td><td>"+l+"</td><td>"+rc+"</td><td class='"+({ACT:"ok",BLOCK:"bad",STOPPED:"bad"}[v]||"warn")+"'>"+v+"</td><td>"+a+" "+d+" → "+r+"</td>"}
     tb.appendChild(tr);await new Promise(r=>setTimeout(r,matchMedia("(prefers-reduced-motion: reduce)").matches?0:250));
   }

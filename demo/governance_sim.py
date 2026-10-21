@@ -105,14 +105,20 @@ class Gate:
         card = f"AC-20260105-{self.cards:02d}"
         self.log(outcome="proposed", approval_card=card, **base)
         if owner_says == "approve":
+            review = ""
+            if rc == "R3":  # R3 needs orchestrator review plus the owner (docs/risk-classes.md)
+                self.log(**{**base, "actor": "orchestrator", "action": f"review {action}", "gen_ai.agent.name": "orchestrator"},
+                         outcome="approved", approval_card=card, approver="orchestrator")
+                review = "reviewed by orchestrator, "
             self.log(outcome="done", approval_card=card, approver=self.owner, **base)
-            return d, f"approved by {self.owner} ({card})"
+            return d, f"{review}approved by {self.owner} ({card})"
         if owner_says == "reject":
             self.log(outcome="rejected", approval_card=card, approver=self.owner, **base)
             return d, f"rejected by {self.owner} ({card})"
         return d, f"waiting on {card}"
 
     def kill(self, on: bool) -> None:
+        # Demo choice: the switch itself is logged as an owner action of class R2 (reversible by design).
         self.killed = on
         self.log(actor=self.owner, level="human", risk_class="R2", tier="hard_stop",
                  action="kill switch " + ("on: stop all agents" if on else "off: restore"), outcome="done", approver=self.owner)
